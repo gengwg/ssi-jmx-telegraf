@@ -1,8 +1,10 @@
 version: '2'
 
 services:
+  #docker run  --restart unless-stopped --name telegraf_atl1-ng -d -p 8240:8240 -v $PWD/jmx-atl-j2.conf:/etc/telegraf/telegraf.conf:ro telegraf
   telegraf_atl1-ng:
-    image: telegraf:latest
+    #image: telegraf:latest
+    image: telegraf
     #network_mode: "bridge"
     # must use host mode on server in order for localhost scrap for es.
     # on mac comment this out
@@ -20,7 +22,8 @@ services:
     #  - monitor-netf
 
   telegraf_ind1-ng:
-    image: telegraf:latest
+    #image: telegraf:latest
+    image: telegraf
     container_name: "telegraf_ind1-ng"
     volumes:
       - $PWD/jmx-ind1-j2.conf:/etc/telegraf/telegraf.conf:ro
@@ -74,4 +77,15 @@ services:
     ports:
       - "7031:7031"
 
-#docker run  --restart unless-stopped --name telegraf_atl1-ng -d -p 8240:8240 -v $PWD/jmx-atl-j2.conf:/etc/telegraf/telegraf.conf:ro telegraf
+  #docker run --restart unless-stopped  --name telegraf_wildfly -d -p 9273:9273 -v $PWD/jmx-wildfly.conf:/etc/telegraf/telegraf.conf:ro telegraf
+  telegraf_wildfly:
+    image: telegraf
+    container_name: "telegraf_wildfly"
+    volumes:
+      - $PWD/jmx-wildfly.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "9273"
+    ports:
+      - "9273:9273"
+
