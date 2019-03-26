@@ -1,0 +1,77 @@
+version: '2'
+
+services:
+  telegraf_atl1-ng:
+    image: telegraf:latest
+    #network_mode: "bridge"
+    # must use host mode on server in order for localhost scrap for es.
+    # on mac comment this out
+    #network_mode: "host"
+    #net: "host"
+    container_name: "telegraf_atl1-ng"
+    volumes:
+      - $PWD/jmx-atl1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "8240"
+    ports:
+      - "8240:8240"
+    #networks:
+    #  - monitor-netf
+
+  telegraf_ind1-ng:
+    image: telegraf:latest
+    container_name: "telegraf_ind1-ng"
+    volumes:
+      - $PWD/jmx-ind1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "6280"
+    ports:
+      - "6280:6280"
+
+  telegraf_lax1-ng:
+    image: telegraf
+    container_name: "telegraf_lax1-ng"
+    volumes:
+      - $PWD/jmx-lax1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "8103"
+    ports:
+      - "8103:8103"
+
+  telegraf_mco1-ng:
+    image: telegraf
+    container_name: "telegraf_mco1-ng"
+    volumes:
+      - $PWD/jmx-mco1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "7853"
+    ports:
+      - "7853:7853"
+
+  telegraf_phl1-ng:
+    image: telegraf
+    container_name: "telegraf_phl1-ng"
+    volumes:
+      - $PWD/jmx-phl1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "7356"
+    ports:
+      - "7356:7356"
+
+  telegraf_gsp1-ng:
+    image: telegraf
+    container_name: "telegraf_gsp1-ng"
+    volumes:
+      - $PWD/jmx-gsp1-j2.conf:/etc/telegraf/telegraf.conf:ro
+    restart: unless-stopped
+    expose:
+      - "7031"
+    ports:
+      - "7031:7031"
+
+#docker run  --restart unless-stopped --name telegraf_atl1-ng -d -p 8240:8240 -v $PWD/jmx-atl-j2.conf:/etc/telegraf/telegraf.conf:ro telegraf
