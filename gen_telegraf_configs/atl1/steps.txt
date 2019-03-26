@@ -1,0 +1,11 @@
+1. Download dahsboard JSON and modify below:
+    "title": "SSI WMS ATL1 Alerts Dashboard NG",
+2. Generate new dashboard JSON:
+    replace.sh atl.json
+3. Generate new telegraf config:
+    $ cat gen_configs.sh
+    python gen_configs.py > atl.conf
+4. Copy telegraf config to remote server:
+    scp jmx-atl1-j2.conf appserver:/app/telegraf/
+
+
